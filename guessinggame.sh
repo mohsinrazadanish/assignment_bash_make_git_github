@@ -7,16 +7,19 @@
 # The user will be informed if their guess is too high or too low.
 # Once the user guesses the correct number of files in the current directory they should be congratulated.
 
-# First we fetch the number of files in the directory
-num_of_files=$( ls -l | grep -c ^[-])
-echo "This program is seeking your guess about the number of files in the current directory!"
+# First we write a function to fetch the number of files in the directory
+function get_number_of_files() {
+	ls -l | grep -c ^[-]
+}
 
+echo "This program is seeking your guess about the number of files in the current directory!"
+num_of_files=$( get_number_of_files )
 guessed=false
-# Next, we seek input of the user
+# Next, we seek input of the user until he/she enters the correct response. Some exception handling is also done for incorrect input such as decimals, strings, or negative integers
 
 while ! $guessed
 do
-	read -p "Enter your guess here: " guess
+	read -p "Plese enter your guess here: " guess
 	echo "your guess: $guess"
 
 	if [[ $guess =~ ^-?[0-9]+$ ]]
